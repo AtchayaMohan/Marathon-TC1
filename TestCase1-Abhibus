@@ -1,0 +1,62 @@
+package Marathon1;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Abhibus {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+
+		ChromeDriver d=new ChromeDriver();
+		d.get("https://www.abhibus.com/");
+		d.manage().window().maximize();
+		d.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		d.findElement(By.xpath("//input[@placeholder='From Station']")).sendKeys("Chennai");
+		Thread.sleep(3000);
+		WebElement frombox=d.findElement(By.xpath("//ul[@class='collection auto-complete-list primary sm false']//li[1]"));
+		String s1=frombox.getText();
+		System.out.println(s1);
+		frombox.click();
+		d.findElement(By.xpath("//input[@placeholder='To Station']")).sendKeys("Banglore");   
+		Thread.sleep(2000);
+		WebElement tobox=d.findElement(By.xpath("/html/body/main/div[1]/div[1]/div[2]/div/div[3]/div/div[2]/ul/li[1]/div/div[2]/div"));
+		String to=tobox.getText();
+		tobox.click();
+		System.out.println(to);
+		WebElement calendar=d.findElement(By.xpath("//input[@placeholder='Onward Journey Date']"));
+		calendar.click();
+		WebElement calendardate=d.findElement(By.xpath("//span[text()='20']"));
+		calendardate.click();
+		d.findElement(By.xpath("//a[text()='Search']")).click();
+		String busname=d.findElement(By.xpath("//div[@id='service-operator-agent-name-1853744925']//h5")).getText();
+		System.out.println(busname+" is the busname");
+		d.findElement(By.xpath("//div[@class='container filter-list ']/a[4]")).click();
+
+		String busname2=d.findElement(By.xpath("(//div[@class='operator-info col s12 m5 l5']//h5)[1]")).getText();
+		System.out.println(busname2+" is the busname");
+		String seatsavailable=d.findElement(By.xpath("//div[@id='service-operator-select-seat-1853744925']//small[text()]")).getText();
+		System.out.println(seatsavailable);
+		d.findElement(By.xpath("//div[@id='service-operator-select-seat-1853744925']/button")).click();
+		Thread.sleep(2000);
+		d.findElement(By.xpath("((//table[@id='seat-layout-details'])[2]//button)[1]")).click();
+		d.findElement(By.xpath("(//div[@class='container checkbox-container  md '])[2]")).click();
+		d.findElement(By.xpath("(//div[@class='container checkbox-container  md '])[2]")).click();
+		String selectedseat=d.findElement(By.xpath("//div[@id='seating-selected-seat-details']//span[text()]")).getText();
+		System.out.println(selectedseat);
+		
+		
+		String fair=d.findElement(By.xpath("//div[@id='seating-selected-seat-details']//span[2][text()]")).getText();
+		System.out.println(fair);
+		String title=d.getTitle();
+		System.out.println("Title of page  "+title);
+		d.close();
+		
+		
+		
+	}
+
+}
